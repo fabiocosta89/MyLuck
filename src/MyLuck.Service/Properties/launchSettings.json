@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "MyLuck.Service": {
+      "commandName": "Project"
+    }
+  }
+}

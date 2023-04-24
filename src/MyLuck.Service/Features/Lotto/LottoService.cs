@@ -70,6 +70,7 @@ internal class LottoService : ILottoService
         _logger.LogInformation("New Lotto draw.");
         await _lottoDataService.CreateAsync(lotto);
 
+        // Send email
         string key = $"{lotto.Number1} {lotto.Number2} {lotto.Number3} {lotto.Number4} {lotto.Number5} {lotto.Number6} - {lotto.Special}";
         string date = lotto.DrawTime.ToString("dd/MM/yyyy");
 

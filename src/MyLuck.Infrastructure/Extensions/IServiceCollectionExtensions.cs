@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 
 using MyLuck.Infrastructure.Features.High5;
+using MyLuck.Infrastructure.Features.Key;
 using MyLuck.Infrastructure.Features.Lotto;
 
 public static class IServiceCollectionExtensions
@@ -10,6 +11,7 @@ public static class IServiceCollectionExtensions
     {
         services.AddSingleton<IHigh5DataService, High5DataService>();
         services.AddSingleton<ILottoDataService, LottoDataService>();
+        services.AddSingleton<IKeyDataService, KeyDataService>();
 
         return services;
     }

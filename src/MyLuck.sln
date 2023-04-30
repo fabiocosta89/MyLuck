@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLuck.Infrastructure", "My
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Background Service", "Background Service", "{76738A2A-AFFD-4229-B554-CCBC1EC424EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLuck.Client", "MyLuck.Client\MyLuck.Client.csproj", "{B526FE87-9A65-498D-BD83-2A96128DD295}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLuck.UI", "MyLuck.UI\MyLuck.UI.csproj", "{E013D7C5-8EE9-4EF3-918B-2238EA55985C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,10 @@ Global
 		{F10CE861-078D-4FBA-B869-6776B0A55E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F10CE861-078D-4FBA-B869-6776B0A55E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F10CE861-078D-4FBA-B869-6776B0A55E2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B526FE87-9A65-498D-BD83-2A96128DD295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B526FE87-9A65-498D-BD83-2A96128DD295}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B526FE87-9A65-498D-BD83-2A96128DD295}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B526FE87-9A65-498D-BD83-2A96128DD295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E013D7C5-8EE9-4EF3-918B-2238EA55985C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E013D7C5-8EE9-4EF3-918B-2238EA55985C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E013D7C5-8EE9-4EF3-918B-2238EA55985C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E013D7C5-8EE9-4EF3-918B-2238EA55985C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

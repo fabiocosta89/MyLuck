@@ -11,7 +11,7 @@ using MyLuck.Service.Features.Lotto;
 using MyLuck.Service.Models;
 using MyLuck.Service.Services;
 
-internal class DependencyInjection
+internal static class DependencyInjection
 {
     /// <summary>
     /// Setup Dependeny Injection

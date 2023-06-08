@@ -1,18 +1,18 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-using System.Security.Claims;
-
 namespace MyLuck.UI.Pages
 {
-    [Authorize(Roles = "User")]
+    [Authorize]
     public class ProfileModel : PageModel
     {
+        public string? Email { get; set; }
+        public string? NickName { get; set; }
+
         public void OnGet()
         {
-            var Name = User.Identity?.Name;
-            var    EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-            var ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
+            Email = User.Identity?.Name;
+            NickName = User.Claims.FirstOrDefault(c => c.Type == "nickname")?.Value;
             
         }
     }

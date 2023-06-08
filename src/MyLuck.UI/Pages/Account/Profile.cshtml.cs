@@ -13,7 +13,6 @@ namespace MyLuck.UI.Pages
         {
             Email = User.Identity?.Name;
             NickName = User.Claims.FirstOrDefault(c => c.Type == "nickname")?.Value;
-            
         }
     }
 }

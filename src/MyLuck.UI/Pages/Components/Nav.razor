@@ -1,4 +1,7 @@
-﻿<nav class="navbar" role="navigation" aria-label="main navigation">
+﻿@using Microsoft.AspNetCore.Components.Authorization;
+@using System.Security.Claims;
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">MyLuck</a>
 
@@ -23,19 +26,23 @@
     <div class="navbar-end">
         <div class="navbar-item">
             <div class="buttons">
-                <a class="button is-primary" href="/account/profile">
-                    <strong>Log in</strong>
-                </a>
+                
+                @if (ClaimsUser?.Identity?.IsAuthenticated ?? false)
+                {
+                    <a class="button is-primary" href="/account/profile">
+                        <strong>Hello @ClaimsUser.Claims.FirstOrDefault(c => c.Type == "nickname")?.Value!</strong>
+                    </a>
+                    <a class="button is-primary" href="/account/logout">
+                        <strong>Logout</strong>
+                    </a>
+                }
+                else
+                {
+                    <a class="button is-primary" href="/account/profile">
+                        <strong>Log in</strong>
+                    </a>
+                }
             </div>
         </div>
     </div>
 </nav>
-
-@code {
-    private Dictionary<string, string> _items = new Dictionary<string, string>
-    {
-        { "Lotto", "/lotto" },
-        { "Euromillions", "" },
-        { "High5", "" }
-    };
-}

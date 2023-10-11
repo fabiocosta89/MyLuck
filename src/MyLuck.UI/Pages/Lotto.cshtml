@@ -1,12 +1,44 @@
 ﻿@page
+@using MyLuck.Infrastructure.Features.Lotto;
 @model MyLuck.UI.Pages.LottoModel
 
 <section class="sectio">
     <div class="container">
         <h1 class="title">Lotto</h1>
 
+        <table class="table is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>Special</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lotto in Model.Lottos)
+                {
+                    <tr>
+                        <th>@lotto.DrawTime.ToShortDateString()</th>
+                        <th>@lotto.Number1</th>
+                        <th>@lotto.Number2</th>
+                        <th>@lotto.Number3</th>
+                        <th>@lotto.Number4</th>
+                        <th>@lotto.Number5</th>
+                        <th>@lotto.Number6</th>
+                        <th>@lotto.Special</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
     </div>
 </section>
 
 @{
+    
 }

@@ -25,10 +25,20 @@ internal class LottoDataService : BaseDataService<Lotto>, ILottoDataService
         .Find(lotto => lotto.DrawTimeValue == drawTime)
         .FirstOrDefaultAsync();
 
+    public async Task<IEnumerable<Lotto>> GetAll()
+    {
+        var filter = Builders<Lotto>.Filter.Empty;
+        IAsyncCursor<Lotto> result = await _mongodbCollection
+            .Find(filter).ToCursorAsync();
+
+        return result.ToEnumerable();
+    }
+
     public async Task<bool> ExisteAsync(string drawId) => 
         await _mongodbCollection.CountDocumentsAsync(draw => draw.DrawId == drawId) > 0;
 
     public async Task<bool> ExisteByDrawTimeAsync(decimal drawTime) => 
         await _mongodbCollection
-        .CountDocumentsAsync(draw => draw.DrawTimeValue == drawTime) > 0;
+            .CountDocumentsAsync(draw => draw.DrawTimeValue == drawTime) > 0;
+
 }

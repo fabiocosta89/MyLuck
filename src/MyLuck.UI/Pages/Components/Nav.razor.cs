@@ -8,7 +8,7 @@ using System.Security.Claims;
 public partial class Nav
 {
     [Inject]
-    private AuthenticationStateProvider _authenticationStateProvider { get; set; }
+    private AuthenticationStateProvider? _authenticationStateProvider { get; set; }
 
     private Dictionary<string, string> _items = new()
     {
@@ -21,9 +21,10 @@ public partial class Nav
 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
-        ClaimsUser = authState.User;
-
-        
+        if (_authenticationStateProvider != null)
+        {
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            ClaimsUser = authState?.User;
+        }
     }
 }

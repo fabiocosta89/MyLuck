@@ -7,6 +7,8 @@ public interface ILottoDataService
 
     Task<Lotto?> GetByDrawTimeAsync(decimal drawTime);
 
+    Task<IEnumerable<Lotto>> GetAll();
+
     Task<bool> ExisteAsync(string drawId);
 
     Task<bool> ExisteByDrawTimeAsync(decimal drawTime);

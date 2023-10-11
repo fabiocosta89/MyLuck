@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 
 using MyLuck.UI.Extensions;
+using MyLuck.UI.Setup;
 
 using System.Security.Claims;
 
@@ -12,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.SetupDependencyInjection(builder.Configuration);
 builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {

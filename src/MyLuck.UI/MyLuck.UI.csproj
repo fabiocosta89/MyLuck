@@ -17,4 +17,8 @@
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MyLuck.Infrastructure\MyLuck.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

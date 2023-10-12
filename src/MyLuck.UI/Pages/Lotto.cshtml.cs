@@ -14,6 +14,7 @@ namespace MyLuck.UI.Pages
         public async Task OnGetAsync()
         {
             Lottos = await _lottoDataService.GetAll();
+            Lottos = Lottos.OrderByDescending(l => l.DrawTime).ToList();
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿ul {
+    list-style: none;
+    display: inline;
+    margin-left: 1em;
+}
+
+li {
+    display: inline-block;
+    margin-right: 1em; /* add spacing between items */
+}

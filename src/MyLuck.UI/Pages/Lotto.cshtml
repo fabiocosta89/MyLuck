@@ -6,6 +6,12 @@
     <div class="container">
         <h1 class="title">Lotto</h1>
 
+        <section class="mb-3">
+            <component type="typeof(Components.MyNumbers)" render-mode="ServerPrerendered" />
+        </section>
+
+        <h2 class="title is-4">Results</h2>
+
         <table class="table is-hoverable is-fullwidth">
             <thead>
                 <tr>
@@ -23,14 +29,14 @@
                 @foreach (var lotto in Model.Lottos)
                 {
                     <tr>
-                        <th>@lotto.DrawTime.ToShortDateString()</th>
-                        <th>@lotto.Number1</th>
-                        <th>@lotto.Number2</th>
-                        <th>@lotto.Number3</th>
-                        <th>@lotto.Number4</th>
-                        <th>@lotto.Number5</th>
-                        <th>@lotto.Number6</th>
-                        <th>@lotto.Special</th>
+                        <td>@lotto.DrawTime.ToShortDateString()</td>
+                        <td>@lotto.Number1</td>
+                        <td>@lotto.Number2</td>
+                        <td>@lotto.Number3</td>
+                        <td>@lotto.Number4</td>
+                        <td>@lotto.Number5</td>
+                        <td>@lotto.Number6</td>
+                        <td>@lotto.Special</td>
                     </tr>
                 }
             </tbody>

@@ -7,7 +7,7 @@
         <h1 class="title">Lotto</h1>
 
         <section class="mb-3">
-            <component type="typeof(Components.MyNumbers)" render-mode="ServerPrerendered" />
+            <component type="typeof(Components.MyNumbers)" render-mode="ServerPrerendered" param-Keys=@Model.Keys />
         </section>
 
         <h2 class="title is-4">Results</h2>
@@ -30,13 +30,13 @@
                 {
                     <tr>
                         <td>@lotto.DrawTime.ToShortDateString()</td>
-                        <td>@lotto.Number1</td>
-                        <td>@lotto.Number2</td>
-                        <td>@lotto.Number3</td>
-                        <td>@lotto.Number4</td>
-                        <td>@lotto.Number5</td>
-                        <td>@lotto.Number6</td>
-                        <td>@lotto.Special</td>
+                        <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Number1 param-Special="false" />
+                        <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Number2 param-Special="false" />
+                        <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Number3 param-Special="false" />
+                        <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Number4 param-Special="false" />
+                        <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Number5 param-Special="false" />
+                        <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Number6 param-Special="false" />
+                        <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Special param-Special="true" />
                     </tr>
                 }
             </tbody>

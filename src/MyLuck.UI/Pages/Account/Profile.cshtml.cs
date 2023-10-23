@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyLuck.UI.Pages
+namespace MyLuck.UI.Pages.Account
 {
     [Authorize]
     public class ProfileModel : PageModel

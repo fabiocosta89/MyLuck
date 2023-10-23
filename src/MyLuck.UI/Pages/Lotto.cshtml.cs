@@ -1,11 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using MyLuck.Infrastructure.Features.Key;
 using MyLuck.Infrastructure.Features.Lotto;
-using MyLuck.UI.Features.Keys;
+using MyLuck.UI.Features.Lotto;
 
 namespace MyLuck.UI.Pages
 {
+    [Authorize]
     public partial class LottoModel : PageModel
     {
         private readonly ILottoDataService _lottoDataService;

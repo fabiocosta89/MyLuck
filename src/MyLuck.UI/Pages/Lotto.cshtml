@@ -1,12 +1,15 @@
 ﻿@page
 @using MyLuck.Infrastructure.Features.Lotto;
 @model MyLuck.UI.Pages.LottoModel
+@{
+    ViewData["Title"] = "Lotto";
+}
 
 <section class="sectio">
     <div class="container">
         <h1 class="title">Lotto</h1>
 
-        <section class="mb-3">
+        <section class="mb-5">
             <component type="typeof(Components.MyNumbers)" render-mode="ServerPrerendered" param-Keys=@Model.Keys />
         </section>
 
@@ -29,7 +32,7 @@
                 @foreach (var lotto in Model.Lottos)
                 {
                     <tr>
-                        <td>@lotto.DrawTime.ToShortDateString()</td>
+                        <td>@lotto.DrawTime.ToString("dd/MM/yyyy")</td>
                         <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Number1 param-Special="false" />
                         <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Number2 param-Special="false" />
                         <component type="typeof(Components.BoldNumber)" render-mode="ServerPrerendered" param-Keys=@Model.Keys param-Number=@lotto.Number3 param-Special="false" />
@@ -44,7 +47,3 @@
 
     </div>
 </section>
-
-@{
-    
-}

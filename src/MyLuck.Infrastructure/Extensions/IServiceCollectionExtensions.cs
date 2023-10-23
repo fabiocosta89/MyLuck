@@ -9,9 +9,9 @@ public static class IServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddSingleton<IHigh5DataService, High5DataService>();
-        services.AddSingleton<ILottoDataService, LottoDataService>();
-        services.AddSingleton<IKeyDataService, KeyDataService>();
+        services.AddTransient<IHigh5DataService, High5DataService>();
+        services.AddTransient<ILottoDataService, LottoDataService>();
+        services.AddTransient<IKeyDataService, KeyDataService>();
 
         return services;
     }

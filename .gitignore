@@ -348,5 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
 /src/MyLuck.Service/appsettings.Production.json
 /src/MyLuck.UI/appsettings.Development.json
+/src/MyLuck.UI/appsettings.Production.json

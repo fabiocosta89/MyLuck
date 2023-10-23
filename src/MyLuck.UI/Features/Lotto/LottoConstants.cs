@@ -1,4 +1,4 @@
-﻿namespace MyLuck.UI.Features.Keys;
+﻿namespace MyLuck.UI.Features.Lotto;
 
 internal static class LottoConstants
 {

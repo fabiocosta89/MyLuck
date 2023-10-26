@@ -9,10 +9,13 @@ namespace MyLuck.UI.Pages.Account
     {
         public async Task OnGetAsync()
         {
-            string returnUrl = "/";
+            string returnUrl = Request.Query["ReturnUrl"][0] ?? "/";
             var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
                 .WithRedirectUri(returnUrl)
                 .Build();
+
+            // It's needed because production runs at http locally
+            HttpContext.Request.Scheme = "https";
 
             await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
         }

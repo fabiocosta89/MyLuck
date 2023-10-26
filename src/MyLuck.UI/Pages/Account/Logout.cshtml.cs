@@ -18,6 +18,9 @@ namespace MyLuck.UI.Pages.Account
                 .WithRedirectUri("/")
                 .Build();
 
+            // It's needed because production runs at http locally
+            HttpContext.Request.Scheme = "https";
+
             await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }

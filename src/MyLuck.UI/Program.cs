@@ -15,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.SetupDependencyInjection(builder.Configuration);
 builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+// Cookie configuration for HTTP to support cookies with SameSite=None
+builder.Services.ConfigureSameSiteNoneCookies();
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
     options.Domain = builder.Configuration["Auth0:Domain"]!;
@@ -35,8 +37,6 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
         }
     };
 });
-
-builder.Services.ConfigureSameSiteNoneCookies();
 
 var app = builder.Build();
 

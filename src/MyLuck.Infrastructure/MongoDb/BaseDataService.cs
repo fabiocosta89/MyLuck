@@ -9,7 +9,7 @@ internal abstract class BaseDataService<T>
 {
     protected readonly IMongoCollection<T> _mongodbCollection;
 
-    internal BaseDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings)
+    private protected BaseDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings)
     {
         var mongoClient = new MongoClient(
             myLuckDatabaseSettings.Value.ConnectionString);

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 using MyLuck.Infrastructure.Extensions;
 using MyLuck.Infrastructure.Settings;
+using MyLuck.Service.Features.EuroDreams;
 using MyLuck.Service.Features.High5;
 using MyLuck.Service.Features.Lotto;
 using MyLuck.Service.Models;
@@ -36,6 +37,7 @@ internal static class DependencyInjection
             .AddSingleton<ILoterieService, LoterieService>()
             .AddSingleton<IHigh5Service, High5Service>()
             .AddSingleton<ILottoService, LottoService>()
+            .AddSingleton<IEuroDreamsService, EuroDreamsService>()
             .AddSingleton<IMailService, MailService>();
     }
 }

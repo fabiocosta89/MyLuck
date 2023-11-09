@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using MyLuck.Service.Features.EuroDreams;
 using MyLuck.Service.Features.High5;
 using MyLuck.Service.Features.Lotto;
 using MyLuck.Service.Setup;
@@ -20,3 +21,6 @@ await high5.RunAsync();
 var lotto = host.Services.GetRequiredService<ILottoService>();
 await lotto.RunAsync();
 
+// EuroDreams
+var euroDreams = host.Services.GetRequiredService<IEuroDreamsService>();
+await euroDreams.RunAsync();

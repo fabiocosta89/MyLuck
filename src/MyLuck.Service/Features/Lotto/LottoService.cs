@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using MyLuck.Infrastructure.Features.Lotto;
+using MyLuck.Infrastructure.Features.Settings;
 using MyLuck.Service.Models;
 using MyLuck.Service.Services;
 
@@ -16,19 +17,22 @@ internal class LottoService : ILottoService
     private readonly IOptions<LoterieSettings> _loterieSettings;
     private readonly ILottoDataService _lottoDataService;
     private readonly IMailService _mailService;
+    private readonly ISettingsDataService _settingsDataService;
 
     public LottoService(
         ILogger<LottoService> logger,
         ILoterieService loterieService,
         IOptions<LoterieSettings> loterieSettings,
         ILottoDataService lottoDataService,
-        IMailService mailService)
+        IMailService mailService,
+        ISettingsDataService settingsDataService)
     {
         _logger = logger;
         _loterieService = loterieService;
         _loterieSettings = loterieSettings;
         _lottoDataService = lottoDataService;
         _mailService = mailService;
+        _settingsDataService = settingsDataService;
     }
 
     /// <summary>
@@ -37,6 +41,13 @@ internal class LottoService : ILottoService
     /// <returns></returns>
     public async Task RunAsync()
     {
+        Infrastructure.Features.Settings.EmailSettings emailSettings = await _settingsDataService.GetEmailSettings();
+        // If the option is turned off, leave
+        if (!emailSettings.Lotto)
+        {
+            return;
+        }
+
         // Get url from appsettings
         string url = _loterieSettings.Value.LottoUrl;
 

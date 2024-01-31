@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using MyLuck.Infrastructure.Features.EuroDreams;
+using MyLuck.Infrastructure.Features.Settings;
 using MyLuck.Service.Features.Lotto;
 using MyLuck.Service.Models;
 using MyLuck.Service.Services;
@@ -16,23 +17,33 @@ internal class EuroDreamsService : IEuroDreamsService
     private readonly ILoterieService _loterieService;
     private readonly IEuroDreamDataService _euroDreamDataService;
     private readonly IMailService _mailService;
+    private readonly ISettingsDataService _settingsDataService;
 
     public EuroDreamsService(
         ILogger<LottoService> logger,
         IOptions<LoterieSettings> loterieSettings,
         ILoterieService loterieService,
         IEuroDreamDataService euroDreamDataService,
-        IMailService mailService)
+        IMailService mailService,
+        ISettingsDataService settingsDataService)
     {
         _logger = logger;
         _loterieSettings = loterieSettings;
         _loterieService = loterieService;
         _euroDreamDataService = euroDreamDataService;
         _mailService = mailService;
+        _settingsDataService = settingsDataService;
     }
 
     public async Task RunAsync()
     {
+        Infrastructure.Features.Settings.EmailSettings emailSettings = await _settingsDataService.GetEmailSettings();
+        // If the option is turned off, leave
+        if (!emailSettings.EuroDream)
+        {
+            return;
+        }
+
         // Get url from appsettings
         string url = _loterieSettings.Value.EuroDreams;
 

@@ -7,4 +7,5 @@ public class MyLuckDatabaseSettings
     public string Lotto { get; set; } = null!;
     public string EuroDreams { get; set; } = null!;
     public string Key { get; set; } = null!;
+    public string Settings { get; set; } = null!;
 }

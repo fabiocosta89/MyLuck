@@ -14,6 +14,7 @@ using System.Linq;
 using IMailService = Services.IMailService;
 using System.Text;
 using MyLuck.Service.Helpers;
+using MyLuck.Infrastructure.Features.Settings;
 
 internal class High5Service : IHigh5Service
 {
@@ -23,6 +24,7 @@ internal class High5Service : IHigh5Service
     private readonly IKeyDataService _keyDataService;
     private readonly IMailService _mailService;
     private readonly IOptions<LoterieSettings> _loterieSettings;
+    private readonly ISettingsDataService _settingsDataService;
 
     public High5Service(
         ILogger<High5Service> logger,
@@ -30,7 +32,8 @@ internal class High5Service : IHigh5Service
         IHigh5DataService high5DataService,
         IKeyDataService keyDataService,
         IMailService mailService,
-        IOptions<LoterieSettings> loterieSettings)
+        IOptions<LoterieSettings> loterieSettings,
+        ISettingsDataService settingsDataService)
     {
         _logger = logger;
         _loterieService = loterieService;
@@ -38,6 +41,7 @@ internal class High5Service : IHigh5Service
         _keyDataService = keyDataService;
         _mailService = mailService;
         _loterieSettings = loterieSettings;
+        _settingsDataService = settingsDataService;
     }
 
     /// <summary>
@@ -45,6 +49,13 @@ internal class High5Service : IHigh5Service
     /// </summary>
     public async Task RunAsync()
     {
+        Infrastructure.Features.Settings.EmailSettings emailSettings = await _settingsDataService.GetEmailSettings();
+        // If the option is turned off, leave
+        if (!emailSettings.High5)
+        {
+            return;
+        }
+
         // Get url from appsettings
         string url = _loterieSettings.Value.High5Url;
 

@@ -11,8 +11,10 @@ internal class SettingsDataService : ISettingsDataService
 
     public SettingsDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings)
     {
-        var mongoClient = new MongoClient(
-            myLuckDatabaseSettings.Value.ConnectionString);
+        MongoClientSettings settings = MongoClientSettings.FromConnectionString(myLuckDatabaseSettings.Value.ConnectionString);
+        settings.ServerApi = new ServerApi(ServerApiVersion.V1);
+
+        MongoClient mongoClient = new(settings);
 
         _mongoDatabase = mongoClient.GetDatabase(
             myLuckDatabaseSettings.Value.DatabaseName);

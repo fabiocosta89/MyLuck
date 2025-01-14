@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 
 using MyLuck.Infrastructure.Features.EuroDreams;
 using MyLuck.Infrastructure.Features.Settings;
-using MyLuck.Service.Features.Lotto;
 using MyLuck.Service.Models;
 using MyLuck.Service.Services;
 
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 internal class EuroDreamsService : IEuroDreamsService
 {
-    private readonly ILogger<LottoService> _logger;
+    private readonly ILogger<EuroDreamsService> _logger;
     private readonly IOptions<LoterieSettings> _loterieSettings;
     private readonly ILoterieService _loterieService;
     private readonly IEuroDreamDataService _euroDreamDataService;
@@ -20,7 +19,7 @@ internal class EuroDreamsService : IEuroDreamsService
     private readonly ISettingsDataService _settingsDataService;
 
     public EuroDreamsService(
-        ILogger<LottoService> logger,
+        ILogger<EuroDreamsService> logger,
         IOptions<LoterieSettings> loterieSettings,
         ILoterieService loterieService,
         IEuroDreamDataService euroDreamDataService,

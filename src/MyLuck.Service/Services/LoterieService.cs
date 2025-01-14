@@ -1,5 +1,6 @@
 ﻿namespace MyLuck.Service.Services;
 
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
@@ -14,7 +15,8 @@ internal class LoterieService : ILoterieService
 
     public async Task<T?> GetResultAsync<T>(string url)
     {
-        HttpClient httpClient = _httpFactory.CreateClient();
+        using HttpClient httpClient = _httpFactory.CreateClient();
+
         HttpResponseMessage response = await httpClient.GetAsync(url);
         if (response.IsSuccessStatusCode)
         {

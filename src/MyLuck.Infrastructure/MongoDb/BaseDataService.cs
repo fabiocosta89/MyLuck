@@ -5,7 +5,7 @@ using MongoDB.Driver;
 
 using MyLuck.Infrastructure.Settings;
 
-internal abstract class BaseDataService<T>
+public abstract class BaseDataService<T>
 {
     protected readonly IMongoCollection<T> _mongodbCollection;
 

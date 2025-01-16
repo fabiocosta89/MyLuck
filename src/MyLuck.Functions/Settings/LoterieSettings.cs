@@ -1,5 +1,5 @@
-﻿namespace MyLuck.Service.Models;
-public class LoterieSettings
+﻿namespace MyLuck.Functions.Settings;
+internal sealed class LotterySettings
 {
     public string High5Url { get; set; } = string.Empty;
     public string LottoUrl { get; set; } = string.Empty;

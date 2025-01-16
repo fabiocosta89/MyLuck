@@ -16,7 +16,7 @@ using System.Text;
 using MyLuck.Service.Helpers;
 using MyLuck.Infrastructure.Features.Settings;
 
-internal class High5Service : IHigh5Service
+public class High5Service : IHigh5Service
 {
     private readonly ILogger<High5Service> _logger;
     private readonly ILoterieService _loterieService;

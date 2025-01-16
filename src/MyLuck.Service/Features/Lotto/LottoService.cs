@@ -10,7 +10,7 @@ using MyLuck.Service.Services;
 
 using System.Threading.Tasks;
 
-internal class LottoService : ILottoService
+public class LottoService : ILottoService
 {
     private readonly ILogger<LottoService> _logger;
     private readonly ILoterieService _loterieService;

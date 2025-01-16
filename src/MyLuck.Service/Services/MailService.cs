@@ -11,7 +11,7 @@ using MyLuck.Service.Models;
 
 using System.Threading.Tasks;
 
-internal class MailService : IMailService
+public class MailService : IMailService
 {
     private readonly EmailSettings _emailSettings;
 

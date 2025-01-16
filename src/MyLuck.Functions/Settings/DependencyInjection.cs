@@ -1,9 +1,8 @@
-﻿namespace MyLuck.Service.Setup;
+﻿namespace MyLuck.Functions.Settings;
 
+using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 using MyLuck.Infrastructure.Extensions;
 using MyLuck.Infrastructure.Settings;
@@ -13,20 +12,14 @@ using MyLuck.Service.Features.Lotto;
 using MyLuck.Service.Models;
 using MyLuck.Service.Services;
 
-using Quartz;
-
 internal static class DependencyInjection
 {
     /// <summary>
     /// Setup Dependeny Injection
     /// </summary>
     /// <returns></returns>
-    internal static void Setup(HostApplicationBuilder builder)
+    internal static void Setup(FunctionsApplicationBuilder builder)
     {
-        builder.Logging
-            .ClearProviders()
-            .AddConsole();
-
         builder.Configuration
             .AddUserSecrets<Program>()
             .AddEnvironmentVariables();
@@ -46,28 +39,5 @@ internal static class DependencyInjection
             .AddSingleton<IEuroDreamsService, EuroDreamsService>()
             .AddSingleton<IMailService, MailService>()
             .AddHttpClient<LoterieService>();
-    }
-
-    internal static void SetupQuartz(HostApplicationBuilder builder)
-    {
-        builder.Services.AddQuartz(x =>
-        {
-            // Eurodreams
-            x.ScheduleJob<EuroDreamsJob>(trigger => trigger
-                .WithIdentity("trigger_euro_dreams", "group1")
-                .StartNow()
-                .WithSimpleSchedule(schedule => schedule
-                    .WithIntervalInMinutes(15)
-                    .RepeatForever()),
-                job => job
-                    .WithIdentity("euro_dreams", "group1")
-            );
-        });
-
-        builder.Services.AddQuartzHostedService(x =>
-        {
-            x.WaitForJobsToComplete = true;
-        });
-
     }
 }

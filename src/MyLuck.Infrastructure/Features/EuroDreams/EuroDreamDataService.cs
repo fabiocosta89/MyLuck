@@ -8,7 +8,7 @@ using MyLuck.Infrastructure.Settings;
 
 using System.Threading.Tasks;
 
-internal class EuroDreamDataService : BaseDataService<EuroDream>, IEuroDreamDataService
+public class EuroDreamDataService : BaseDataService<EuroDream>, IEuroDreamDataService
 {
     public EuroDreamDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings) 
         : base(myLuckDatabaseSettings)

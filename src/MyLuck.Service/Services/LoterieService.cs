@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-internal class LoterieService : ILoterieService
+public class LoterieService : ILoterieService
 {
     private readonly IHttpClientFactory _httpFactory;
 

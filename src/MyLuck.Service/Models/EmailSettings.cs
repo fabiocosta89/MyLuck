@@ -1,6 +1,6 @@
 ﻿namespace MyLuck.Service.Models;
 
-internal class EmailSettings
+public class EmailSettings
 {
     public string From { get; set; } = string.Empty;
     public string SmtpServer { get; set; } = string.Empty;

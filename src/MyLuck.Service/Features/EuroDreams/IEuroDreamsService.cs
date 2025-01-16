@@ -1,6 +1,6 @@
 ﻿namespace MyLuck.Service.Features.EuroDreams;
 
-internal interface IEuroDreamsService
+public interface IEuroDreamsService
 {
-    Task RunAsync();
+    public Task RunAsync();
 }

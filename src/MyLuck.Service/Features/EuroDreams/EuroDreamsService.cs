@@ -9,7 +9,7 @@ using MyLuck.Service.Services;
 
 using System.Threading.Tasks;
 
-internal class EuroDreamsService : IEuroDreamsService
+public class EuroDreamsService : IEuroDreamsService
 {
     private readonly ILogger<EuroDreamsService> _logger;
     private readonly IOptions<LoterieSettings> _loterieSettings;

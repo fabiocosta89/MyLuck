@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLuck.Service", "MyLuck.Service\MyLuck.Service.csproj", "{8282960A-A8CC-4E42-B54B-0155B5A20A97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLuck.Service", "src\MyLuck.Service\MyLuck.Service.csproj", "{8282960A-A8CC-4E42-B54B-0155B5A20A97}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLuck.Infrastructure", "MyLuck.Infrastructure\MyLuck.Infrastructure.csproj", "{F10CE861-078D-4FBA-B869-6776B0A55E2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLuck.Infrastructure", "src\MyLuck.Infrastructure\MyLuck.Infrastructure.csproj", "{F10CE861-078D-4FBA-B869-6776B0A55E2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLuck.Functions", "MyLuck.Functions\MyLuck.Functions.csproj", "{8C43BB5B-D72E-4C9D-B79A-4EEA0454564C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLuck.WebApp", "src\MyLuck.WebApp\MyLuck.WebApp.csproj", "{11C5E072-A8AB-4E03-B715-B0DC6333D12F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{F10CE861-078D-4FBA-B869-6776B0A55E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F10CE861-078D-4FBA-B869-6776B0A55E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F10CE861-078D-4FBA-B869-6776B0A55E2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C43BB5B-D72E-4C9D-B79A-4EEA0454564C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C43BB5B-D72E-4C9D-B79A-4EEA0454564C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C43BB5B-D72E-4C9D-B79A-4EEA0454564C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C43BB5B-D72E-4C9D-B79A-4EEA0454564C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11C5E072-A8AB-4E03-B715-B0DC6333D12F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11C5E072-A8AB-4E03-B715-B0DC6333D12F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11C5E072-A8AB-4E03-B715-B0DC6333D12F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11C5E072-A8AB-4E03-B715-B0DC6333D12F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

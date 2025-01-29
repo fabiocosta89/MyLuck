@@ -8,13 +8,9 @@ using MyLuck.Infrastructure.Settings;
 
 using System.Threading.Tasks;
 
-internal class LottoDataService : BaseDataService<Lotto>, ILottoDataService
+internal class LottoDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings) 
+    : BaseDataService<Lotto>(myLuckDatabaseSettings), ILottoDataService
 {
-    public LottoDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings)
-        : base(myLuckDatabaseSettings)
-    {
-    }
-
     public async Task<Lotto?> GetAsync(string drawId) =>
         await _mongodbCollection
         .Find(lotto => lotto.DrawId == drawId)

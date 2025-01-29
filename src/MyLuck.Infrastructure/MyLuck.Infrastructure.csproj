@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+	<LangVersion>13</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

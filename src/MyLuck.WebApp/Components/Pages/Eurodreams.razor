@@ -1,0 +1,48 @@
+﻿@page "/"
+@attribute [StreamRendering]
+@inject IEuroDreamDataService EuroDreamDataService
+
+<PageTitle>Eurodreams</PageTitle>
+
+<div class="container">
+    <h1>Eurodreams results</h1>
+
+    <div class="row text-center">
+        @if (euroDreams == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Numbers</th>
+                        <th scope="col">Dream Number</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var euroDream in euroDreams)
+                    {
+                        <tr scope="row">
+                            <td>@euroDream.DrawTime.ToShortDateString()</td>
+                            <td>@euroDream.Number1  @euroDream.Number2  @euroDream.Number3  @euroDream.Number4  @euroDream.Number5  @euroDream.Number6</td>
+                            <td>@euroDream.Special</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+@code
+{
+    private IEnumerable<EuroDream>? euroDreams;
+
+    protected override async Task OnInitializedAsync()
+    {
+        euroDreams = await EuroDreamDataService.GetAll(CancellationToken.None);
+    }
+}

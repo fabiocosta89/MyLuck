@@ -48,7 +48,7 @@ internal static class DependencyInjection
             // // Eurodreams
             x.ScheduleJob<EuroDreamsJob>(trigger => trigger
                 .WithIdentity("trigger_euro_dreams", "group1")
-                // .StartNow()
+                .StartNow()
                 .WithSimpleSchedule(schedule => schedule
                     .WithIntervalInMinutes(15)
                     .RepeatForever()),

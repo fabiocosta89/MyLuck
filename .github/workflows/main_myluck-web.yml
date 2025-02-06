@@ -31,7 +31,7 @@ jobs:
       with:
         push: true
         tags: fabio.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_8c033bcf57814915854d75ce53c9001d }}/myluck:${{ github.sha }}
-        file: ./Dockerfile
+        file: src/MyLuck.WebApp/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest

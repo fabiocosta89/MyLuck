@@ -46,17 +46,17 @@ internal static class DependencyInjection
             // );
             
             // // Eurodreams
-            x.ScheduleJob<EuroDreamsJob>(trigger => trigger
-                .WithIdentity("trigger_euro_dreams", "group1")
-                .StartNow()
-                .WithSimpleSchedule(schedule => schedule
-                    .WithIntervalInMinutes(15)
-                    .RepeatForever()),
-                job => job
-                    .WithIdentity("euro_dreams", "group1")
-            );
+            // x.ScheduleJob<EuroDreamsJob>(trigger => trigger
+            //     .WithIdentity("trigger_euro_dreams", "group1")
+            //     .StartNow()
+            //     .WithSimpleSchedule(schedule => schedule
+            //         .WithIntervalInMinutes(15)
+            //         .RepeatForever()),
+            //     job => job
+            //         .WithIdentity("euro_dreams", "group1")
+            // );
         });
         
-        builder.Services.AddQuartzHostedService();
+        // builder.Services.AddQuartzHostedService();
     }
 }

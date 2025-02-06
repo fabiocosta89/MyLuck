@@ -4,8 +4,8 @@ using Microsoft.Extensions.Options;
 
 using MyLuck.Infrastructure.Features.EuroDreams;
 using MyLuck.Infrastructure.Features.Settings;
-using MyLuck.WebApp.Features.Email;
-using MyLuck.WebApp.Features.Shared.Lottery;
+using Email;
+using Shared.Lottery;
 
 public class EuroDreamsService : IEuroDreamsService
 {
@@ -34,12 +34,12 @@ public class EuroDreamsService : IEuroDreamsService
 
     public async Task GetResultsAsync()
     {
-        EmailSettings emailSettings = await _settingsDataService.GetEmailSettings();
-        // If the option is turned off, leave
-        if (!emailSettings.EuroDream)
-        {
-            return;
-        }
+        // EmailSettings emailSettings = await _settingsDataService.GetEmailSettings();
+        // // If the option is turned off, leave
+        // if (!emailSettings.EuroDream)
+        // {
+        //     return;
+        // }
 
         // Get url from appsettings
         string url = _loterieSettings.Value.EuroDreams;

@@ -3,11 +3,11 @@ using Microsoft.Extensions.Options;
 
 using MongoDB.Driver;
 
-using MyLuck.Infrastructure.Settings;
+using Settings;
 
 public abstract class BaseDataService<T>
 {
-    protected readonly IMongoCollection<T> _mongodbCollection;
+    protected readonly IMongoCollection<T> MongodbCollection;
 
     private protected BaseDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings)
     {
@@ -17,13 +17,8 @@ public abstract class BaseDataService<T>
         var mongoDatabase = mongoClient.GetDatabase(
             myLuckDatabaseSettings.Value.DatabaseName);
 
-        _mongodbCollection = mongoDatabase.GetCollection<T>(typeof(T).Name);
+        MongodbCollection = mongoDatabase.GetCollection<T>(typeof(T).Name);
     }
 
-    /// <summary>
-    /// Add a new object
-    /// </summary>
-    /// <param name="item">new item to add</param>
-    /// <returns></returns>
-    public async Task CreateAsync(T item) => await _mongodbCollection.InsertOneAsync(item);
+    public async Task CreateAsync(T item, CancellationToken cancellationToken) => await MongodbCollection.InsertOneAsync(item, cancellationToken: cancellationToken);
 }

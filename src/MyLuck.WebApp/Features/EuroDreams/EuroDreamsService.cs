@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using MyLuck.Infrastructure.Features.EuroDreams;
-using MyLuck.Infrastructure.Features.Settings;
 using Email;
 using Shared.Lottery;
 
@@ -14,33 +13,23 @@ public class EuroDreamsService : IEuroDreamsService
     private readonly ILoterieService _loterieService;
     private readonly IEuroDreamDataService _euroDreamDataService;
     private readonly IMailService _mailService;
-    private readonly ISettingsDataService _settingsDataService;
 
     public EuroDreamsService(
         ILogger<EuroDreamsService> logger,
         IOptions<LoterieSettings> loterieSettings,
         ILoterieService loterieService,
         IEuroDreamDataService euroDreamDataService,
-        IMailService mailService,
-        ISettingsDataService settingsDataService)
+        IMailService mailService)
     {
         _logger = logger;
         _loterieSettings = loterieSettings;
         _loterieService = loterieService;
         _euroDreamDataService = euroDreamDataService;
         _mailService = mailService;
-        _settingsDataService = settingsDataService;
     }
 
     public async Task GetResultsAsync()
     {
-        // EmailSettings emailSettings = await _settingsDataService.GetEmailSettings();
-        // // If the option is turned off, leave
-        // if (!emailSettings.EuroDream)
-        // {
-        //     return;
-        // }
-
         // Get url from appsettings
         string url = _loterieSettings.Value.EuroDreams;
 
@@ -72,7 +61,7 @@ public class EuroDreamsService : IEuroDreamsService
 
         // Save the draw if it's new
         _logger.LogInformation("New EuroDreams draw.");
-        await _euroDreamDataService.CreateAsync(euroDream);
+        await _euroDreamDataService.CreateAsync(euroDream, cancellationToken: CancellationToken.None);
 
         // Send email
         string key = $"{euroDream.Number1} {euroDream.Number2} {euroDream.Number3} {euroDream.Number4} {euroDream.Number5} {euroDream.Number6} - {euroDream.Special}";

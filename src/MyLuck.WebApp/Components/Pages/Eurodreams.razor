@@ -1,14 +1,14 @@
 ﻿@page "/"
 @attribute [StreamRendering]
-@inject IEuroDreamDataService EuroDreamDataService
+@inject IEuroDreamsRepository EuroDreamsRepository
 
-<PageTitle>Eurodreams</PageTitle>
+<PageTitle>EuroDreams</PageTitle>
 
 <div class="container">
-    <h1>Eurodreams results</h1>
+    <h1>EuroDreams results</h1>
 
     <div class="row text-center">
-        @if (euroDreams == null)
+        @if (_euroDreams == null)
         {
             <p><em>Loading...</em></p>
         }
@@ -23,12 +23,12 @@
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                    @foreach (var euroDream in euroDreams)
+                    @foreach (var euroDream in _euroDreams)
                     {
                         <tr scope="row">
-                            <td>@euroDream.DrawTime.ToShortDateString()</td>
-                            <td>@euroDream.Number1  @euroDream.Number2  @euroDream.Number3  @euroDream.Number4  @euroDream.Number5  @euroDream.Number6</td>
-                            <td>@euroDream.Special</td>
+                            <td>@euroDream.DrawTime.ToString("dd-MM-yyyy")</td>
+                            <td>@euroDream.Numbers.Aggregate(string.Empty, (current, number) => current + (number + " "))</td>
+                            <td>@euroDream.SpecialNumbers[0]</td>
                         </tr>
                     }
                 </tbody>
@@ -39,10 +39,10 @@
 
 @code
 {
-    private IEnumerable<EuroDream>? euroDreams;
+    private IEnumerable<EuroDreams>? _euroDreams;
 
     protected override async Task OnInitializedAsync()
     {
-        euroDreams = await EuroDreamDataService.GetAll(CancellationToken.None);
+        _euroDreams = await EuroDreamsRepository.GetAll(CancellationToken.None);
     }
 }

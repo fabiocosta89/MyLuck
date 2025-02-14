@@ -1,4 +1,6 @@
-﻿namespace MyLuck.Infrastructure.Features.EuroDreams;
+﻿using MyLuck.Infrastructure.Models;
+
+namespace MyLuck.Infrastructure.Features.EuroDreams;
 using Microsoft.Extensions.Options;
 
 using MongoDB.Driver;
@@ -9,17 +11,17 @@ using MyLuck.Infrastructure.Settings;
 
 using System.Threading.Tasks;
 
-public class EuroDreamDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings) 
+public class EuroDreamDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings)
     : BaseDataService<EuroDream>(myLuckDatabaseSettings), IEuroDreamDataService
 {
     public async Task<bool> ExisteByDrawTimeAsync(decimal drawTime) =>
-        await _mongodbCollection
+        await MongodbCollection
             .CountDocumentsAsync(draw => draw.DrawTimeValue == drawTime) > 0;
 
     public async Task<IEnumerable<EuroDream>> GetAll(CancellationToken cancellationToken)
     {
         var filter = Builders<EuroDream>.Filter.Empty;
-        IAsyncCursor<EuroDream> result = await _mongodbCollection
+        using IAsyncCursor<EuroDream> result = await MongodbCollection
             .Find(filter)
             .ToCursorAsync(cancellationToken);
 

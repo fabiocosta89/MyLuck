@@ -1,39 +1,27 @@
-﻿namespace MyLuck.WebApp.Features.EuroDreams;
-using MongoDB.Bson;
+﻿using System.Collections.ObjectModel;
+using MyLuck.Infrastructure.Features.Shared.LotteryResultsApi;
+
+namespace MyLuck.WebApp.Features.EuroDreams;
 
 using MyLuck.Infrastructure.Features.EuroDreams;
-using MyLuck.WebApp.Features.Shared.Helpers;
-using MyLuck.WebApp.Features.Shared.Lottery;
 
 using System;
 using System.Linq;
 
 internal static class EuroDreamsMappings
 {
-    internal static EuroDream? LoterieDrawsToEuroDream(LoterieDraws<LoterieDraw<EuroDreamsResult>> euroDream)
+    internal static Collection<EuroDreams> LoterieResultToEuroDreams(IEnumerable<LotteryResult> lotteryResults)
     {
-        var euroDreamDraw = euroDream.Draws?.FirstOrDefault();
-        if (euroDreamDraw == null
-            || euroDreamDraw.Results == null)
+        Collection<EuroDreams> euroDreams = [];
+        
+        foreach (var result in lotteryResults)
         {
-            return null;
+            euroDreams.Add(new EuroDreams(
+                result.Numbers.Where(n => !n.IsSpecial).Select(x => x.Value).ToArray(), 
+                result.Numbers.Where(n => n.IsSpecial).Select(x => x.Value).ToArray(), 
+                new DateTimeOffset(result.Date.ToDateTime(new TimeOnly()))));
         }
 
-        DateTime drawTime = DateTimeHelper.ConvertLinuxDateTimeIntoDateTime(euroDreamDraw.DrawTime);
-
-        return new EuroDream
-        {
-            Id = ObjectId.GenerateNewId().ToString(),
-            DrawId = euroDreamDraw.DrawId,
-            DrawTime = drawTime,
-            DrawTimeValue = euroDreamDraw.DrawTime,
-            Number1 = euroDreamDraw.Results?[0].Primary?[0],
-            Number2 = euroDreamDraw.Results?[0].Primary?[1],
-            Number3 = euroDreamDraw.Results?[0].Primary?[2],
-            Number4 = euroDreamDraw.Results?[0].Primary?[3],
-            Number5 = euroDreamDraw.Results?[0].Primary?[4],
-            Number6 = euroDreamDraw.Results?[0].Primary?[5],
-            Special = euroDreamDraw.Results?[0].Secondary?[0]
-        };
+        return euroDreams;
     }
 }

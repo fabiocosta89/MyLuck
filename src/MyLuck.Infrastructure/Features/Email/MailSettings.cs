@@ -1,4 +1,4 @@
-﻿namespace MyLuck.WebApp.Features.Email;
+﻿namespace MyLuck.Infrastructure.Features.Email;
 
 public class MailSettings
 {
@@ -7,5 +7,4 @@ public class MailSettings
     public int Port { get; set; }
     public string UserName { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
-    public string To { get; set; } = string.Empty;
 }

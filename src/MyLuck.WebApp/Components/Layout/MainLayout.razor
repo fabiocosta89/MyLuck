@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using MyLuck.WebApp.Features.Shared.Helpers
+@inherits LayoutComponentBase
 
 <div class="page">
     <div class="sidebar">
@@ -7,7 +8,7 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            v@(_version)
         </div>
 
         <article class="content px-4">
@@ -15,3 +16,13 @@
         </article>
     </main>
 </div>
+
+@code
+{
+    private string _version = string.Empty;
+    
+    protected override void OnInitialized()
+    {
+        _version = AppHelper.GetAppVersion();
+    }
+}

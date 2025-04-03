@@ -1,11 +1,8 @@
-﻿namespace MyLuck.WebApp.Features.Email;
-
-using MailKit.Net.Smtp;
-using MailKit.Security;
-
+﻿using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
-
 using MimeKit;
+
+namespace MyLuck.Infrastructure.Features.Email;
 
 public class MailService : IMailService
 {
@@ -23,8 +20,7 @@ public class MailService : IMailService
         using var smtp = new SmtpClient();
         await smtp.ConnectAsync(
             _emailSettings.SmtpServer,
-            _emailSettings.Port,
-            SecureSocketOptions.Auto);
+            _emailSettings.Port);
 
         await smtp.AuthenticateAsync(
             _emailSettings.UserName,
@@ -45,7 +41,7 @@ public class MailService : IMailService
             }.ToMessageBody()
         };
         email.From.Add(MailboxAddress.Parse(_emailSettings.From));
-        email.To.Add(MailboxAddress.Parse(_emailSettings.To));
+        email.To.Add(MailboxAddress.Parse(mailRequest.EmailTo));
 
         return email;
     }

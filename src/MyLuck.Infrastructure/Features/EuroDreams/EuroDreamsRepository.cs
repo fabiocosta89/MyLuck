@@ -17,6 +17,7 @@ public class EuroDreamsRepository(IOptions<MyLuckDatabaseSettings> myLuckDatabas
         var filter = Builders<EuroDreams>.Filter.Empty;
         using IAsyncCursor<EuroDreams> result = await MongodbCollection
             .Find(filter)
+            .SortByDescending(x => x.DrawTime)
             .ToCursorAsync(cancellationToken);
 
         return await result.ToListAsync(cancellationToken);

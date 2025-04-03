@@ -2,5 +2,5 @@
 
 public interface IEuroDreamsService
 {
-    public Task GetResultsAsync();
+    public Task GetResultsAsync(CancellationToken cancellationToken = default);
 }

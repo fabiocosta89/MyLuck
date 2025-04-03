@@ -1,4 +1,4 @@
-﻿namespace MyLuck.WebApp.Features.Email;
+﻿namespace MyLuck.Infrastructure.Features.Email;
 
 public interface IMailService
 {

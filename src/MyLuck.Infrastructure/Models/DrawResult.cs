@@ -13,7 +13,7 @@ public abstract class DrawResult(int[] numbers, int[] specialNumbers, DateTimeOf
 
     public DateTimeOffset CreatedAt { get; private set; } = DateTimeOffset.UtcNow;
 
-    public int[] Numbers { get; private set; } = numbers;
+    public int[] Numbers { get; set; } = numbers;
 
     public int[] SpecialNumbers { get; private set; } = specialNumbers;
 }

@@ -51,6 +51,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _euroDreams = await EuroDreamsRepository.GetAll(CancellationToken.None);
+        _euroDreams = await EuroDreamsRepository.GetAllAsync(CancellationToken.None);
+
+        // await UpdateOrder();
+    }
+    
+    private async Task UpdateOrder()
+    {
+        foreach (var euroDream in _euroDreams!)
+        {
+            euroDream.Numbers = euroDream.Numbers.Order().ToArray();
+
+            await EuroDreamsRepository.UpdateAsync(euroDream.Id!, euroDream.Numbers, CancellationToken.None);
+        }
     }
 }

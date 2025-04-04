@@ -24,7 +24,7 @@ internal static class DependencyInjection
             x.ScheduleJob<EuroDreamsJob>(trigger => trigger
                 .WithIdentity("trigger_eurodreams")
                 .StartNow()
-                .WithDailyTimeIntervalSchedule(1, IntervalUnit.Minute)
+                .WithDailyTimeIntervalSchedule(20, IntervalUnit.Minute)
                 .WithDescription("Check for new Eurodreams results")
             );
         });

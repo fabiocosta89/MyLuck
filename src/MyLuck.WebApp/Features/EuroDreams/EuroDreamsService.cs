@@ -56,16 +56,28 @@ public class EuroDreamsService : IEuroDreamsService
             _logger.LogInformation("New EuroDreams draw for the day {Day}.", result.DrawTime.ToString("dd/MM/yyyy"));
             await _euroDreamsRepository.CreateAsync(result, cancellationToken);
             
-            var key = BuildKeyString(result);
+            var key = BuildResultString(result);
             var date = result.DrawTime.ToString("dd/MM/yyyy");
             
             foreach (var email in emails)
             {
+                var (lotteryKeyString, lotteryKeyMatchString) = BuildKeyString(email, result);
+
+                string body;
+                if (lotteryKeyString.Length > 0)
+                {
+                    body = string.Format(EuroDreamsConsts.Email.BodyWithUserKey, key, date, lotteryKeyString, lotteryKeyMatchString);
+                }
+                else
+                {
+                    body = string.Format(EuroDreamsConsts.Email.Body, key, date);
+                }
+                
                 MailRequest mailRequest = new()
                 {
-                    EmailTo = email,
+                    EmailTo = email.Email,
                     Subject = string.Format(EuroDreamsConsts.Email.Subject, date),
-                    Body = string.Format(EuroDreamsConsts.Email.Body, key, date)
+                    Body = body
                 };
                 await _mailService.SendEmailAsync(mailRequest);
             }
@@ -74,7 +86,27 @@ public class EuroDreamsService : IEuroDreamsService
         }
     }
 
-    private static string BuildKeyString(Infrastructure.Features.EuroDreams.EuroDreams result)
+    private static (StringBuilder lotteryKeyString, StringBuilder lotteryKeyMatchString) BuildKeyString(
+        NotificationInfo email, Infrastructure.Features.EuroDreams.EuroDreams result)
+    {
+        StringBuilder lotteryKeyString = new();
+        StringBuilder lotteryKeyMatchString = new();
+        foreach (var lotteryKey in email.LotteryKey.Where(x => x.LotteryType == LotteryType.EuroDreams))
+        {
+            lotteryKeyString.AppendLine($"{string.Join(" ", lotteryKey.Numbers)} - {string.Join(" ", lotteryKey.SpecialNumbers)}");
+                    
+            var matchNumbers = lotteryKey.Numbers.Intersect(result.Numbers).ToArray();
+            var matchSpecialNumbers = lotteryKey.SpecialNumbers.Intersect(result.SpecialNumbers).ToArray();
+            if (matchNumbers.Length > 0 || matchSpecialNumbers.Length > 0)
+            {
+                lotteryKeyMatchString.AppendLine($"{string.Join(" ", matchNumbers)} - {string.Join(" ", matchSpecialNumbers)}");
+            }
+        }
+
+        return (lotteryKeyString, lotteryKeyMatchString);
+    }
+
+    private static string BuildResultString(Infrastructure.Features.EuroDreams.EuroDreams result)
     {
         StringBuilder key = new();
         foreach (var number in result.Numbers)

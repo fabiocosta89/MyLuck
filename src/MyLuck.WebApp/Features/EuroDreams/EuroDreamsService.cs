@@ -45,19 +45,19 @@ public class EuroDreamsService : IEuroDreamsService
         var emails = (await _notificationInfoRepository.GetActiveEmails(cancellationToken)).ToArray();
         _logger.LogInformation("There are {NumberOfEmails} Emails actives.", emails.Length);
 
-        foreach (var result in euroDreamsResults.OrderBy(x => x.DrawTime))
+        foreach (var result in euroDreamsResults.OrderBy(x => x.DrawDay))
         {
-            bool existAlready = await _euroDreamsRepository.ExistByDrawTimeAsync(result.DrawTime, cancellationToken);
+            bool existAlready = await _euroDreamsRepository.ExistByDrawTimeAsync(result.DrawDay, cancellationToken);
             if (existAlready)
             {
                 continue;
             }
             
-            _logger.LogInformation("New EuroDreams draw for the day {Day}.", result.DrawTime.ToString("dd/MM/yyyy"));
+            _logger.LogInformation("New EuroDreams draw for the day {Day}.", result.DrawDay.ToString("dd/MM/yyyy"));
             await _euroDreamsRepository.CreateAsync(result, cancellationToken);
             
             var key = BuildResultString(result);
-            var date = result.DrawTime.ToString("dd/MM/yyyy");
+            var date = result.DrawDay.ToString("dd/MM/yyyy");
             
             foreach (var email in emails)
             {

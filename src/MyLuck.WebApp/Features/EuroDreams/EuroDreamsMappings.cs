@@ -2,11 +2,8 @@
 using MyLuck.Infrastructure.Features.Shared.LotteryResultsApi;
 
 namespace MyLuck.WebApp.Features.EuroDreams;
-
-using System;
 using System.Linq;
 using MyLuck.Infrastructure.Features.EuroDreams;
-
 internal static class EuroDreamsMappings
 {
     internal static Collection<EuroDreams> LoterieResultToEuroDreams(IEnumerable<LotteryResult> lotteryResults)
@@ -18,7 +15,7 @@ internal static class EuroDreamsMappings
             euroDreams.Add(new EuroDreams(
                 result.Numbers.Where(n => !n.IsSpecial).Select(x => x.Value).Order().ToArray(), 
                 result.Numbers.Where(n => n.IsSpecial).Select(x => x.Value).ToArray(), 
-                new DateTimeOffset(result.Date.ToDateTime(new TimeOnly()))));
+                result.Date));
         }
 
         return euroDreams;

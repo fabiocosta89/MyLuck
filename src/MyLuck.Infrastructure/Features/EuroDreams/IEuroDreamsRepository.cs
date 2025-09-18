@@ -2,7 +2,7 @@ namespace MyLuck.Infrastructure.Features.EuroDreams;
 
 public interface IEuroDreamsRepository
 {
-    Task<bool> ExistByDrawTimeAsync(DateTimeOffset drawTime, CancellationToken cancellationToken);
+    Task<bool> ExistByDrawTimeAsync(DateOnly drawDay, CancellationToken cancellationToken);
     
     Task CreateAsync(EuroDreams item, CancellationToken cancellationToken);
 

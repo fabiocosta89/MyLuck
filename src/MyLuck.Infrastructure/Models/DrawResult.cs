@@ -3,13 +3,13 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace MyLuck.Infrastructure.Models;
 
-public abstract class DrawResult(int[] numbers, int[] specialNumbers, DateTimeOffset drawTime)
+public abstract class DrawResult(int[] numbers, int[] specialNumbers, DateOnly drawDay)
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; private set; }
     
-    public DateTimeOffset DrawTime { get; private set; } = drawTime;
+    public DateOnly DrawDay { get; private set; } = drawDay;
 
     public DateTimeOffset CreatedAt { get; private set; } = DateTimeOffset.UtcNow;
 

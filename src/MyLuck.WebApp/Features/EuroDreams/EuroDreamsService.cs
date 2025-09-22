@@ -86,6 +86,37 @@ public class EuroDreamsService : IEuroDreamsService
         }
     }
 
+    public async Task GetOldResultsAsync(CancellationToken cancellationToken = default)
+    {
+        var offset = 0;
+        const int maxOffset = 25;
+        const int offsetIncrement = 5;
+        while (offset <= maxOffset)
+        {
+            LotteryResult[]? draws = await _lotteryResults.GetEuroDreamsResultsWithOffset(offset, cancellationToken);
+            if (draws is null)
+            {
+                _logger.LogError("No results!");
+                return;
+            }
+            
+            // Map into the entity model
+            Collection<Infrastructure.Features.EuroDreams.EuroDreams> euroDreamsResults = EuroDreamsMappings.LoterieResultToEuroDreams(draws);
+            foreach (var result in euroDreamsResults)
+            {
+                bool existAlready = await _euroDreamsRepository.ExistByDrawTimeAsync(result.DrawDay, cancellationToken);
+                if (existAlready)
+                {
+                    continue;
+                }
+                
+                await _euroDreamsRepository.CreateAsync(result, cancellationToken);
+            }
+            
+            offset += offsetIncrement;
+        }
+    }
+
     private static (StringBuilder lotteryKeyString, StringBuilder lotteryKeyMatchString) BuildKeyString(
         NotificationInfo email, Infrastructure.Features.EuroDreams.EuroDreams result)
     {

@@ -2,5 +2,7 @@
 
 public interface IEuroDreamsService
 {
-    public Task GetResultsAsync(CancellationToken cancellationToken = default);
+    Task GetResultsAsync(CancellationToken cancellationToken = default);
+
+    Task GetOldResultsAsync(CancellationToken cancellationToken = default);
 }

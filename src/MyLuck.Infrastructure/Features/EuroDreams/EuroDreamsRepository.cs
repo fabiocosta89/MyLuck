@@ -14,13 +14,20 @@ public class EuroDreamsRepository(IOptions<MyLuckDatabaseSettings> myLuckDatabas
 
     public async Task<IEnumerable<EuroDreams>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var filter = Builders<EuroDreams>.Filter.Empty;
-        using IAsyncCursor<EuroDreams> result = await MongodbCollection
-            .Find(filter)
+        return await MongodbCollection
+            .Find(x => true)
             .SortByDescending(x => x.DrawDay)
-            .ToCursorAsync(cancellationToken);
-
-        return await result.ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken);
+    }
+    
+    public async Task<IEnumerable<EuroDreams>> GetAllWithPaginationAsync(int pageNumber, int itemsPerPage, CancellationToken cancellationToken)
+    {
+        return await MongodbCollection
+            .Find(x => true)
+            .SortByDescending(x => x.DrawDay)
+            .Skip(pageNumber * itemsPerPage)
+            .Limit(itemsPerPage)
+            .ToListAsync(cancellationToken);
     }
 
     public async Task UpdateAsync(string id, int[] numbers, CancellationToken cancellationToken)
@@ -29,5 +36,10 @@ public class EuroDreamsRepository(IOptions<MyLuckDatabaseSettings> myLuckDatabas
         var update = Builders<EuroDreams>.Update.Set(x => x.Numbers, numbers);
         
         await MongodbCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+    }
+
+    public async Task<long> GetTotalCountAsync(CancellationToken cancellationToken)
+    {
+        return await MongodbCollection.CountDocumentsAsync(x => true, cancellationToken: cancellationToken);
     }
 }

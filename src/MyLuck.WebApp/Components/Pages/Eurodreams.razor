@@ -1,4 +1,5 @@
 ﻿@page "/"
+@page "/page/{CurrentPage:int?}"
 @using MyLuck.WebApp.Features.EuroDreams
 @attribute [StreamRendering]
 @inject IEuroDreamsRepository EuroDreamsRepository
@@ -24,33 +25,60 @@
         {
             <table class="table table-hover table-sm">
                 <thead>
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Numbers</th>
-                        <th scope="col">Dream Number</th>
-                    </tr>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Numbers</th>
+                    <th scope="col">Dream Number</th>
+                </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                    @foreach (var euroDream in _euroDreams)
-                    {
-                        <tr scope="row">
-                            <td>@euroDream.DrawDay.ToString("dd-MM-yyyy")</td>
-                            <td>@euroDream.Numbers.Aggregate(string.Empty, (current, number) => current + (number + " "))</td>
-                            <td>@euroDream.SpecialNumbers[0]</td>
-                        </tr>
-                    }
+                @foreach (var euroDream in _euroDreams)
+                {
+                    <tr scope="row">
+                        <td>@euroDream.DrawDay.ToString("dd-MM-yyyy")</td>
+                        <td>@euroDream.Numbers.Aggregate(string.Empty, (current, number) => current + (number + " "))</td>
+                        <td>@euroDream.SpecialNumbers[0]</td>
+                    </tr>
+                }
                 </tbody>
             </table>
+            <nav aria-label="Other result pages">
+                <ul class="pagination">
+                    <li class="page-item @(CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link" href="@($"/page/{Math.Max(1, CurrentPage - 1)}")">Previous</a>
+                    </li>
+                    @for (int pageNumber = Math.Max(1, CurrentPage - 1); pageNumber <= Math.Min(CurrentPage + 1, _totalPages); pageNumber++)
+                    {
+                        <li class="page-item @(pageNumber == CurrentPage ? "active" : "")">
+                            <a class="page-link" href="@($"/page/{pageNumber}")">@(pageNumber)</a>
+                        </li>
+                    }
+                    <li class="page-item @(CurrentPage == _totalPages ? "disabled" : "")">
+                        <a class="page-link" href="@($"/page/{Math.Min(_totalPages, CurrentPage + 1)}")">Next</a>
+                    </li>
+                </ul>
+            </nav>
         }
     </div>
 </div>
 
 @code
 {
-    private IEnumerable<EuroDreams>? _euroDreams;
+    [Parameter]
+    public int CurrentPage { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    private IEnumerable<EuroDreams>? _euroDreams;
+    private const int PageSize = 20;
+    private int _totalPages = 1;
+
+    protected override async Task OnParametersSetAsync()
     {
-        _euroDreams = await EuroDreamsRepository.GetAllAsync(CancellationToken.None);
+        var totalCount = await EuroDreamsRepository.GetTotalCountAsync(CancellationToken.None);
+        _totalPages = (int)Math.Ceiling((double)totalCount / PageSize);
+        
+        // Ensure CurrentPage is within valid range
+        CurrentPage = Math.Max(0, Math.Min(CurrentPage - 1, _totalPages - 1)) + 1;
+        
+        _euroDreams = await EuroDreamsRepository.GetAllWithPaginationAsync(CurrentPage - 1, PageSize, CancellationToken.None);
     }
 }

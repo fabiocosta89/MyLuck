@@ -8,5 +8,10 @@ public interface IEuroDreamsRepository
 
     Task<IEnumerable<EuroDreams>> GetAllAsync(CancellationToken cancellationToken);
 
+    Task<IEnumerable<EuroDreams>> GetAllWithPaginationAsync(int pageNumber, int itemsPerPage,
+        CancellationToken cancellationToken);
+
     Task UpdateAsync(string id, int[] numbers, CancellationToken cancellationToken);
+    
+    Task<long> GetTotalCountAsync(CancellationToken cancellationToken);
 }

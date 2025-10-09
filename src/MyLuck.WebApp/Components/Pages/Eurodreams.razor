@@ -37,7 +37,7 @@
                     <tr scope="row">
                         <td>@euroDream.DrawDay.ToString("dd-MM-yyyy")</td>
                         <td>@euroDream.Numbers.Aggregate(string.Empty, (current, number) => current + (number + " "))</td>
-                        <td>@euroDream.SpecialNumbers[0]</td>
+                        <td>@euroDream.SpecialNumbers.FirstOrDefault()</td>
                     </tr>
                 }
                 </tbody>

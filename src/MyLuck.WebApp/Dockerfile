@@ -7,6 +7,8 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+COPY ["Directory.Packages.props", "Directory.Packages.props"]
+COPY ["Directory.Build.props", "Directory.Build.props"]
 COPY ["src/MyLuck.WebApp/MyLuck.WebApp.csproj", "src/MyLuck.WebApp/"]
 COPY ["src/MyLuck.Infrastructure/MyLuck.Infrastructure.csproj", "src/MyLuck.Infrastructure/"]
 RUN dotnet restore "src/MyLuck.WebApp/MyLuck.WebApp.csproj"

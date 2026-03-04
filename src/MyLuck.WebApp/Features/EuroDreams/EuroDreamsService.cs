@@ -32,7 +32,7 @@ public class EuroDreamsService : IEuroDreamsService
 
     public async Task GetResultsAsync(CancellationToken cancellationToken = default)
     {
-        LotteryResult[]? draws = await _lotteryResults.GetEuroDreamsResults(cancellationToken);
+        var draws = await _lotteryResults.GetEuroDreamsResults(cancellationToken);
         if (draws is null)
         {
             _logger.LogError("No results!");
@@ -40,14 +40,14 @@ public class EuroDreamsService : IEuroDreamsService
         }
 
         // Map into the entity model
-        Collection<Infrastructure.Features.EuroDreams.EuroDreams> euroDreamsResults = EuroDreamsMappings.LoterieResultToEuroDreams(draws);
+        var euroDreamsResults = EuroDreamsMappings.LoterieResultToEuroDreams(draws.Draws);
         
         var emails = (await _notificationInfoRepository.GetActiveEmails(cancellationToken)).ToArray();
         _logger.LogInformation("There are {NumberOfEmails} Emails actives.", emails.Length);
 
         foreach (var result in euroDreamsResults.OrderBy(x => x.DrawDay))
         {
-            bool existAlready = await _euroDreamsRepository.ExistByDrawTimeAsync(result.DrawDay, cancellationToken);
+            var existAlready = await _euroDreamsRepository.ExistByDrawTimeAsync(result.DrawDay, cancellationToken);
             if (existAlready)
             {
                 continue;
@@ -93,7 +93,7 @@ public class EuroDreamsService : IEuroDreamsService
         const int offsetIncrement = 5;
         while (offset <= maxOffset)
         {
-            LotteryResult[]? draws = await _lotteryResults.GetEuroDreamsResultsWithOffset(offset, cancellationToken);
+            var draws = await _lotteryResults.GetEuroDreamsResultsWithOffset(offset, cancellationToken);
             if (draws is null)
             {
                 _logger.LogError("No results!");
@@ -101,7 +101,7 @@ public class EuroDreamsService : IEuroDreamsService
             }
             
             // Map into the entity model
-            Collection<Infrastructure.Features.EuroDreams.EuroDreams> euroDreamsResults = EuroDreamsMappings.LoterieResultToEuroDreams(draws);
+            var euroDreamsResults = EuroDreamsMappings.LoterieResultToEuroDreams(draws.Draws);
             foreach (var result in euroDreamsResults)
             {
                 bool existAlready = await _euroDreamsRepository.ExistByDrawTimeAsync(result.DrawDay, cancellationToken);

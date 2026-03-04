@@ -13,20 +13,20 @@ public sealed class LotteryResultsApi : ILotteryResultsApi
         _lotteryApiSettings = lotteryApiSettings;
     }
 
-    public async Task<LotteryResult[]?> GetEuroDreamsResults(CancellationToken cancellationToken = default)
+    public async Task<LotteryDraw?> GetEuroDreamsResults(CancellationToken cancellationToken = default)
     {
         using var httpClient = _httpFactory.CreateClient();
         AddHeaders(httpClient);
 
-        return await httpClient.GetFromJsonAsync<LotteryResult[]>(_lotteryApiSettings.Value.EuroDreams, cancellationToken);
+        return await httpClient.GetFromJsonAsync<LotteryDraw>(_lotteryApiSettings.Value.EuroDreams, cancellationToken);
     }
     
-    public async Task<LotteryResult[]?> GetEuroDreamsResultsWithOffset(int offset, CancellationToken cancellationToken = default)
+    public async Task<LotteryDraw?> GetEuroDreamsResultsWithOffset(int offset, CancellationToken cancellationToken = default)
     {
         using var httpClient = _httpFactory.CreateClient();
         AddHeaders(httpClient);
 
-        return await httpClient.GetFromJsonAsync<LotteryResult[]>($"{_lotteryApiSettings.Value.EuroDreams}?offset={offset}", cancellationToken);
+        return await httpClient.GetFromJsonAsync<LotteryDraw>($"{_lotteryApiSettings.Value.EuroDreams}?offset={offset}", cancellationToken);
     }
     
     private void AddHeaders(HttpClient httpClient)

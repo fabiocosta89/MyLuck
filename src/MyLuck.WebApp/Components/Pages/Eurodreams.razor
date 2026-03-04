@@ -9,10 +9,10 @@
 <div class="container">
     <h1>EuroDreams results</h1>
     
-    @if (EuroDreamsJob.LastExecutionTime is not null)
+    @if (EuroDreamsJob.GetLastExecutionTime() is not null)
     {
         <div class="row small">
-            <p>Updated on @EuroDreamsJob.LastExecutionTime.Value.ToLocalTime().ToString("dd-MM-yyyy HH:mm")</p>
+            <p>Updated on @EuroDreamsJob.GetLastExecutionTime()!.Value.ToLocalTime().ToString("dd-MM-yyyy HH:mm")</p>
         </div>
     }
 

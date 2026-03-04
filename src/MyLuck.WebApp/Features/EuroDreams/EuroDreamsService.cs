@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Text;
 using MyLuck.Infrastructure.Features.Email;
 using MyLuck.Infrastructure.Features.Shared.LotteryResultsApi;
@@ -8,7 +9,7 @@ using MyLuck.Infrastructure.Features.NotificationInfo;
 
 namespace MyLuck.WebApp.Features.EuroDreams;
 
-public class EuroDreamsService : IEuroDreamsService
+public partial class EuroDreamsService : IEuroDreamsService
 {
     private readonly ILogger<EuroDreamsService> _logger;
     private readonly IMailService _mailService;
@@ -43,7 +44,7 @@ public class EuroDreamsService : IEuroDreamsService
         var euroDreamsResults = EuroDreamsMappings.LoterieResultToEuroDreams(draws.Draws);
         
         var emails = (await _notificationInfoRepository.GetActiveEmails(cancellationToken)).ToArray();
-        _logger.LogInformation("There are {NumberOfEmails} Emails actives.", emails.Length);
+        LogThereAreNumberofemailsEmailsActives(emails.Length);
 
         foreach (var result in euroDreamsResults.OrderBy(x => x.DrawDay))
         {
@@ -53,30 +54,29 @@ public class EuroDreamsService : IEuroDreamsService
                 continue;
             }
             
-            _logger.LogInformation("New EuroDreams draw for the day {Day}.", result.DrawDay.ToString("dd/MM/yyyy"));
+            LogNewEurodreamsDrawForTheDayDay(result.DrawDay.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
             await _euroDreamsRepository.CreateAsync(result, cancellationToken);
             
             var key = BuildResultString(result);
-            var date = result.DrawDay.ToString("dd/MM/yyyy");
+            var date = result.DrawDay.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            var subject = string.Format(CultureInfo.InvariantCulture, EuroDreamsConsts.Email.Subject, date);
             
             foreach (var email in emails)
             {
                 var (lotteryKeyString, lotteryKeyMatchString) = BuildKeyString(email, result);
 
-                string body;
-                if (lotteryKeyString.Length > 0)
-                {
-                    body = string.Format(EuroDreamsConsts.Email.BodyWithUserKey, key, date, lotteryKeyString, lotteryKeyMatchString);
-                }
-                else
-                {
-                    body = string.Format(EuroDreamsConsts.Email.Body, key, date);
-                }
+                var body = lotteryKeyString.Length > 0 
+                    ? string.Format(
+                        CultureInfo.InvariantCulture, 
+                        EuroDreamsConsts.Email.BodyWithUserKey, key, date, lotteryKeyString, lotteryKeyMatchString) 
+                    : string.Format(
+                        CultureInfo.InvariantCulture, 
+                        EuroDreamsConsts.Email.Body, key, date);
                 
                 MailRequest mailRequest = new()
                 {
                     EmailTo = email.Email,
-                    Subject = string.Format(EuroDreamsConsts.Email.Subject, date),
+                    Subject = subject,
                     Body = body
                 };
                 await _mailService.SendEmailAsync(mailRequest);
@@ -124,13 +124,17 @@ public class EuroDreamsService : IEuroDreamsService
         StringBuilder lotteryKeyMatchString = new();
         foreach (var lotteryKey in email.LotteryKey.Where(x => x.LotteryType == LotteryType.EuroDreams))
         {
-            lotteryKeyString.AppendLine($"{string.Join(" ", lotteryKey.Numbers)} - {string.Join(" ", lotteryKey.SpecialNumbers)}");
+            lotteryKeyString.AppendLine(
+                CultureInfo.InvariantCulture, 
+                $"{string.Join(" ", lotteryKey.Numbers)} - {string.Join(" ", lotteryKey.SpecialNumbers)}");
                     
             var matchNumbers = lotteryKey.Numbers.Intersect(result.Numbers).ToArray();
             var matchSpecialNumbers = lotteryKey.SpecialNumbers.Intersect(result.SpecialNumbers).ToArray();
             if (matchNumbers.Length > 0 || matchSpecialNumbers.Length > 0)
             {
-                lotteryKeyMatchString.AppendLine($"{string.Join(" ", matchNumbers)} - {string.Join(" ", matchSpecialNumbers)}");
+                lotteryKeyMatchString.AppendLine(
+                    CultureInfo.InvariantCulture,
+                    $"{string.Join(" ", matchNumbers)} - {string.Join(" ", matchSpecialNumbers)}");
             }
         }
 
@@ -142,14 +146,20 @@ public class EuroDreamsService : IEuroDreamsService
         StringBuilder key = new();
         foreach (var number in result.Numbers)
         {
-            key.Append($"{number} ");
+            key.Append(CultureInfo.InvariantCulture, $"{number} ");
         }
         key.Append("- ");
         foreach (var number in result.SpecialNumbers)
         {
-            key.Append($"{number} ");
+            key.Append(CultureInfo.InvariantCulture, $"{number} ");
         }
 
         return key.ToString();
     }
+
+    [LoggerMessage(LogLevel.Information, "There are {NumberOfEmails} Emails actives.")]
+    partial void LogThereAreNumberofemailsEmailsActives(int NumberOfEmails);
+
+    [LoggerMessage(LogLevel.Information, "New EuroDreams draw for the day {Day}.")]
+    partial void LogNewEurodreamsDrawForTheDayDay(string Day);
 }

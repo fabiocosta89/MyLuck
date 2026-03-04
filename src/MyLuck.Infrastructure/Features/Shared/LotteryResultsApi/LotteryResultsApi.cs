@@ -15,7 +15,7 @@ public sealed class LotteryResultsApi : ILotteryResultsApi
 
     public async Task<LotteryDraw?> GetEuroDreamsResults(CancellationToken cancellationToken = default)
     {
-        using var httpClient = _httpFactory.CreateClient();
+        using HttpClient httpClient = _httpFactory.CreateClient();
         AddHeaders(httpClient);
 
         return await httpClient.GetFromJsonAsync<LotteryDraw>(_lotteryApiSettings.Value.EuroDreams, cancellationToken);
@@ -23,7 +23,7 @@ public sealed class LotteryResultsApi : ILotteryResultsApi
     
     public async Task<LotteryDraw?> GetEuroDreamsResultsWithOffset(int offset, CancellationToken cancellationToken = default)
     {
-        using var httpClient = _httpFactory.CreateClient();
+        using HttpClient httpClient = _httpFactory.CreateClient();
         AddHeaders(httpClient);
 
         return await httpClient.GetFromJsonAsync<LotteryDraw>($"{_lotteryApiSettings.Value.EuroDreams}?offset={offset}", cancellationToken);

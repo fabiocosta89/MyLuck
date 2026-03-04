@@ -2,27 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	<AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
-	<LangVersion>13</LangVersion>
 	<UserSecretsId>dc38b067-8fb8-4dcc-bac9-eb502428c431</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MailKit" Version="4.13.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.7" />
-    <PackageReference Include="MimeKit" Version="4.13.0" />
-    <PackageReference Include="MongoDB.Driver" Version="3.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Http">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.2\Microsoft.Extensions.Http.dll</HintPath>
-    </Reference>
+    <PackageReference Include="MailKit" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="MimeKit" />
+    <PackageReference Include="MongoDB.Driver" />
   </ItemGroup>
 
 </Project>

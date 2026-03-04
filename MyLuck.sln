@@ -7,6 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLuck.Infrastructure", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLuck.WebApp", "src\MyLuck.WebApp\MyLuck.WebApp.csproj", "{11C5E072-A8AB-4E03-B715-B0DC6333D12F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8E15C10A-6FA0-4D54-A6EE-63BCC8F664D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{811ABDA8-AABF-4C52-8C86-111997777114}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,5 +36,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {22EA8B8A-91EA-4C23-90C1-354B8E39B1B3}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F10CE861-078D-4FBA-B869-6776B0A55E2C} = {8E15C10A-6FA0-4D54-A6EE-63BCC8F664D5}
+		{11C5E072-A8AB-4E03-B715-B0DC6333D12F} = {8E15C10A-6FA0-4D54-A6EE-63BCC8F664D5}
 	EndGlobalSection
 EndGlobal

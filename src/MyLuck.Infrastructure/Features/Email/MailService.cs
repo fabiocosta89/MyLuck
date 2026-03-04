@@ -15,7 +15,7 @@ public class MailService : IMailService
 
     public async Task SendEmailAsync(MailRequest mailRequest)
     {
-        MimeMessage email = PrepareEmailMessage(mailRequest);
+        using MimeMessage email = PrepareEmailMessage(mailRequest);
 
         using var smtp = new SmtpClient();
         await smtp.ConnectAsync(

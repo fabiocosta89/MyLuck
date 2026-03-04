@@ -1,9 +1,10 @@
-﻿namespace MyLuck.Infrastructure.MongoDb;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 using MongoDB.Driver;
 
-using Settings;
+using MyLuck.Infrastructure.Settings;
+
+namespace MyLuck.Infrastructure.MongoDb;
 
 public abstract class BaseDataService<T>
 {
@@ -11,10 +12,12 @@ public abstract class BaseDataService<T>
 
     private protected BaseDataService(IOptions<MyLuckDatabaseSettings> myLuckDatabaseSettings)
     {
+#pragma warning disable CA2000
         var mongoClient = new MongoClient(
             myLuckDatabaseSettings.Value.ConnectionString);
+#pragma warning restore CA2000
 
-        var mongoDatabase = mongoClient.GetDatabase(
+        IMongoDatabase? mongoDatabase = mongoClient.GetDatabase(
             myLuckDatabaseSettings.Value.DatabaseName);
 
         MongodbCollection = mongoDatabase.GetCollection<T>(typeof(T).Name);

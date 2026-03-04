@@ -32,8 +32,8 @@ public class EuroDreamsRepository(IOptions<MyLuckDatabaseSettings> myLuckDatabas
 
     public async Task UpdateAsync(string id, int[] numbers, CancellationToken cancellationToken)
     {
-        var filter = Builders<EuroDreams>.Filter.Eq(x => x.Id, id);
-        var update = Builders<EuroDreams>.Update.Set(x => x.Numbers, numbers);
+        FilterDefinition<EuroDreams>? filter = Builders<EuroDreams>.Filter.Eq(x => x.Id, id);
+        UpdateDefinition<EuroDreams>? update = Builders<EuroDreams>.Update.Set(x => x.Numbers, numbers);
         
         await MongodbCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
     }

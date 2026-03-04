@@ -10,7 +10,7 @@ public class NotificationInfoRepository(IOptions<MyLuckDatabaseSettings> myLuckD
 {
     public async Task<IEnumerable<NotificationInfo>> GetActiveEmails(CancellationToken cancellationToken)
     {
-        var filter = Builders<NotificationInfo>.Filter.Eq(x => x.IsActive, true);
+        FilterDefinition<NotificationInfo>? filter = Builders<NotificationInfo>.Filter.Eq(x => x.IsActive, true);
 
         return await MongodbCollection
             .Find(filter)
@@ -19,8 +19,8 @@ public class NotificationInfoRepository(IOptions<MyLuckDatabaseSettings> myLuckD
     
     public async Task AddLotteryKeyAsync(string id, LotteryKey lotteryKey, CancellationToken cancellationToken)
     {
-        var filter = Builders<NotificationInfo>.Filter.Eq(x => x.Id, id);
-        var update = Builders<NotificationInfo>.Update.AddToSet(x => x.LotteryKey, lotteryKey);
+        FilterDefinition<NotificationInfo>? filter = Builders<NotificationInfo>.Filter.Eq(x => x.Id, id);
+        UpdateDefinition<NotificationInfo>? update = Builders<NotificationInfo>.Update.AddToSet(x => x.LotteryKey, lotteryKey);
         
         await MongodbCollection.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
     }

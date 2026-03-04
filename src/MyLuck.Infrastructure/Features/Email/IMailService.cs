@@ -2,5 +2,5 @@
 
 public interface IMailService
 {
-    public Task SendEmailAsync(MailRequest mailRequest);
+    Task SendEmailAsync(MailRequest mailRequest);
 }

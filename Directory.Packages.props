@@ -6,15 +6,15 @@
     <!-- Static code analysis -->
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.19.0.132793" />
     <!-- WebApp      -->
-      <PackageVersion Include="Quartz" Version="3.16.0" />
-      <PackageVersion Include="Quartz.Extensions.DependencyInjection" Version="3.16.0" />
-      <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.16.0" />
+    <PackageVersion Include="Quartz" Version="3.16.1" />
+    <PackageVersion Include="Quartz.Extensions.DependencyInjection" Version="3.16.1" />
+    <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.16.1" />
     <!-- Infrastructure -->
-      <PackageVersion Include="MailKit" Version="4.15.0" />
-      <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
-      <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.3" />
-      <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.3" />
-      <PackageVersion Include="MimeKit" Version="4.15.0" />
-      <PackageVersion Include="MongoDB.Driver" Version="3.7.0" />
+    <PackageVersion Include="MailKit" Version="4.15.1" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.3" />
+    <PackageVersion Include="MimeKit" Version="4.15.1" />
+    <PackageVersion Include="MongoDB.Driver" Version="3.7.0" />
   </ItemGroup>
 </Project>

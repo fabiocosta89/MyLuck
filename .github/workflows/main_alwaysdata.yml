@@ -1,0 +1,56 @@
+name: Build and deploy to Alwaysdata
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    environment: Production
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 10.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: App Settings Variable Substitution
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: ${{ secrets.APPSETTINGS_PATH }}
+      env:
+        EmailConfiguration.From: ${{ secrets.EmailConfiguration__From }}
+        EmailConfiguration.Password: ${{ secrets.EmailConfiguration__Password }}
+        EmailConfiguration.Port: ${{ secrets.EmailConfiguration__Port }}
+        EmailConfiguration.SmtpServer: ${{ secrets.EmailConfiguration__SmtpServer }}
+        EmailConfiguration.Username: ${{ secrets.EmailConfiguration__Username }}
+        LotteryApi.ApiKey: ${{ secrets.LotteryApi__ApiKey }}
+        LotteryApi.EuroDreams: ${{ secrets.LotteryApi__EuroDreams }}
+        MyLuckDatabase.ConnectionString: ${{ secrets.MyLuckDatabase__ConnectionString }}
+        MyLuckDatabase.DatabaseName: ${{ secrets.MyLuckDatabase__DatabaseName }}
+    - name: dotnet publish
+      run: dotnet publish -c Release --no-restore --no-build -p:UseAppHost=false -o ./Release/
+    - name: FTP Deploy
+      uses: sebastianpopp/ftp-action@v2.0.0
+      with:
+        # FTP host
+        host: ${{ secrets.FTP_SERVER }}
+        # FTP user
+        user: ${{ secrets.FTP_USERNAME }}
+        # FTP password
+        password: ${{ secrets.FTP_PASSWORD }}
+        # Force SSL encryption
+        forceSsl: true
+        # Local directory
+        localDir: ./Release/
